@@ -282,3 +282,4 @@
 /Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/PaintSystemAPIVersionOne/obj/Debug/net8.0/PaintSystemAPIVersionOne.pdb
 /Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/PaintSystemAPIVersionOne/obj/Debug/net8.0/PaintSystemAPIVersionOne.genruntimeconfig.cache
 /Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/PaintSystemAPIVersionOne/obj/Debug/net8.0/ref/PaintSystemAPIVersionOne.dll
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/PaintSystemAPIVersionOne/obj/Debug/net8.0/PaintSystemAPIVersionOne.sourcelink.json

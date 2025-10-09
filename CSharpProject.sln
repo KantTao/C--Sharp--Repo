@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaintSystemAPIVersionOne", "PaintSystemAPIVersionOne\PaintSystemAPIVersionOne.csproj", "{13233C6E-51AD-47C6-9DF9-E83F37003428}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagementSystemAPI", "BookManagementSystemAPI\BookManagementSystemAPI.csproj", "{DA8012F6-B63B-400A-8630-D27FE30A35B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{13233C6E-51AD-47C6-9DF9-E83F37003428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13233C6E-51AD-47C6-9DF9-E83F37003428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13233C6E-51AD-47C6-9DF9-E83F37003428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
