@@ -5,8 +5,6 @@ namespace BookManagementSystemAPI.Data
 {
     
     
-    
-    
     public class BookDbContext:DbContext //BookDb database
     {
         public DbSet<Book> BookTable { get; set; }
@@ -23,8 +21,7 @@ namespace BookManagementSystemAPI.Data
             //define data seeding
             modelBuilder.Entity<Book>().HasMany<Publisher>(x => x.Publishers);
 
-
-
+            
             base.OnModelCreating(modelBuilder); 
         }
     }

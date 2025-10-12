@@ -5,8 +5,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookManagementSystemAPI.Exceptions;
 
+
 public class GlobalExceptionHandler
 {
+    private ILogger<GlobalExceptionHandler> _logger;
+
+    
+    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+    {
+        _logger = logger;
+    }
+    
+    
+
+
     public async Task HandleExceptionAsync(HttpContext context)
     {
         var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
@@ -23,8 +35,8 @@ public class GlobalExceptionHandler
         //返回响应给客户端 JsonSerializer.Serialize(response) 把 FormattedResponse 对象转换成 JSON 字符串
         await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         
+        
     }
-    
     
     
     private int GetStatusCode(System.Exception exception)
@@ -34,7 +46,9 @@ public class GlobalExceptionHandler
         if (exception is InvalidOperationException) return 500;
         if (exception is KeyNotFoundException) return 400;
         if (exception is NotFoundException) return 404;
+        _logger.LogError($" error;{exception.Message}");
         return 500;
-    }
+    } 
+    
     
 }
