@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using PaintSystemAPIVersionOne.Data;
 using PaintSystemAPIVersionOne.Data.Seeders;
+using PaintSystemAPIVersionOne.Repositories;
+using PaintSystemAPIVersionOne.Services;
 
 namespace PaintSystemAPIVersionOne;
 
@@ -17,7 +19,6 @@ public class Program
         builder.Services.AddControllers().AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         
-        
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -26,6 +27,16 @@ public class Program
         builder.Services.AddDbContext<PaintDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("PaintDb"))
         );
+        
+        //Dependent Injection using scop
+        builder.Services.AddScoped<UserRepository>();
+        builder.Services.AddScoped<UserService>();
+        
+        
+        // All Repository and Service DI 
+        builder.Services.AddRepositories(); // 注册所有 Repository
+        builder.Services.AddServices();     // 注册所有 Service
+        
         
         var app = builder.Build();
         

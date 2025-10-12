@@ -66,5 +66,27 @@ dotnet ef database update
  前段传递的参数，只传FK 而不写FK对呀的相关属性，需要在Class里面的导航属性中加？ 
  不然就要附带FK的Field。
  
- 
   
+ ==============================Version 2 =============================
+ Controller layers build 
+ services   layer  build 
+ repository layer  build 
+ relevant Dependency Injection
+ DTO  Transfer Objct 
+ DTO  build with Automapper 
+ FluentValidations For DTO 
+ Swagger XML COmments 
+ 
+顺序：
+Repository(dbContext)  →  Service(Repository) → （DI）program.cs ->  Controller(Service)
+
+原因： Controller 依赖 Service，Service 依赖 Repository，Repository 依赖 DbContext
+Step1: 
+Repository(dbContext) 
+Service(Repository)
+Controller(Service)
+ 
+
+ 
+ 
+ 

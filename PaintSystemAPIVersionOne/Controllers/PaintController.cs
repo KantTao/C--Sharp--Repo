@@ -18,7 +18,7 @@ namespace PaintSystemAPIVersionOne.Controllers
         {
             _dbContext = context;
         }
-
+        
 
         [HttpGet("users")]
         public IActionResult GetAllUsers()
@@ -100,8 +100,7 @@ namespace PaintSystemAPIVersionOne.Controllers
                 .ToList();
             return Ok(PaintProductsStocks);
         }
-
-
+        
         [HttpGet("PaintProductsStock/{id}")]
         public IActionResult PaintProductsStockById(int id)
         {
@@ -112,7 +111,7 @@ namespace PaintSystemAPIVersionOne.Controllers
             {
                 return NotFound($"No PaintProductsStock found with Id = {id}");
             }
-
+            
             return Ok(PaintProductsStock);
         }
         
@@ -171,6 +170,7 @@ namespace PaintSystemAPIVersionOne.Controllers
                 UserId = order.UserId,
                 CreatedAt = DateTime.Now
             };
+            
             
             _dbContext.OrderTable.Add(newOrder);
             _dbContext.SaveChanges();
