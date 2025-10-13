@@ -2,8 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PaintSystemAPIVersionOne.DTO;
 
-public class UserRequest
+public class UserCreatRequest
 {
+     
      [Required]
      [Phone]
      public string PhoneNumber { get; set; }

@@ -13,8 +13,8 @@ public class PaintProductRepository
     {
         _dbContext = dbContext;
     }
-    
-    
+
+
     /// <summary>
     /// return all PaintProduct from database 
     /// </summary>
@@ -23,9 +23,8 @@ public class PaintProductRepository
     {
         return await _dbContext.PaintProductTable.ToListAsync();
     }
-    
-    
-    
+
+
     /// <summary>
     /// return a specific PaintProduct by id
     /// </summary>
@@ -39,12 +38,26 @@ public class PaintProductRepository
     }
     
     
-    //
-    // public async CreatePaintProduct()
-    // {
-    //     
-    // }
-
-
-
+    
+    /// <summary>
+    /// Add new paintProduct to database 
+    /// </summary>
+    /// <param name="paintProduct"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<PaintProduct> AddProduct(PaintProduct paintProduct)
+    {
+        
+        try
+        {
+            await _dbContext.PaintProductTable.AddAsync(paintProduct);
+            await _dbContext.SaveChangesAsync();
+            return paintProduct;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Add product failed", ex);
+        }
+        
+    }
 }

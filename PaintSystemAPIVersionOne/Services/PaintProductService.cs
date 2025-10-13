@@ -1,3 +1,4 @@
+using PaintSystemAPIVersionOne.DTO;
 using PaintSystemAPIVersionOne.Extension;
 using PaintSystemAPIVersionOne.Model;
 using PaintSystemAPIVersionOne.Repositories;
@@ -35,7 +36,6 @@ public class PaintProductService
     }
     
     
-    
     public async Task <ServiceResponse<PaintProduct>> GetProductById(int id)
     {
         var product = await _paintProductRepository.GetPaintProductById(id);
@@ -46,7 +46,19 @@ public class PaintProductService
         }
         return new ServiceResponse<PaintProduct>(true, "PaintProduct Found", product);
     }
+
     
     
+    public async Task<ServiceResponse<PaintProduct>> AddProduct(PaintProductRequest paintProductRequest)
+    {
+        //DTO transfer to PaintProduct Object 
+        PaintProduct newPaintProduct= new PaintProduct(paintProductRequest.)
+            
+    }
+
+    
+    
+
+
 
 }

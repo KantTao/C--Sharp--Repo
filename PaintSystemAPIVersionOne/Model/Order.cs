@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PaintSystemAPIVersionOne.Enum;
-
 namespace PaintSystemAPIVersionOne.Model;
+
+
 
 public class Order
 {
@@ -19,7 +20,7 @@ public class Order
     [ForeignKey("User")] public int UserId { get; set; }
 
     public StockTransaction? StockTransaction { get; set; }
-
+    
     //多对多的中间表导航属性添加
     public List<OrderPaintProductDetail>? OrderPaintProducts { get; set; } = new();
     public User? User { get; set; }
@@ -30,7 +31,6 @@ public class Order
     public Order()
     {
     }
-    
     
     
     public Order(decimal totalPrice, OrderStatus orderStatus, string orderReference)
