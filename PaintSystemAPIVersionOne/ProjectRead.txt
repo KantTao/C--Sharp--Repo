@@ -36,7 +36,9 @@ PaintProductsStock -----> StockTransaction (Many-----> Many)
 dotnet ef migrations add InitialCreate
 dotnet ef database update
  
- ？ 1 to 1 Dbeaver 会和Diagram图为何会出现 小圆点? 
+？ 1 to 1 Dbeaver 会和Diagram图为何会出现 小圆点? 
+
+
  
  Tip:
  Define a many to many on 2 tables,
@@ -67,15 +69,19 @@ dotnet ef database update
  不然就要附带FK的Field。
  
   
- ==============================Version 2 =============================
+==============================Version 2 =============================
+ 
+ 
+ 
  Controller layers build 
  services   layer  build 
  repository layer  build 
  relevant Dependency Injection
- DTO  Transfer Objct 
- DTO  build with Automapper 
+ DTO  Transfer Object
+ DTO  Build with Automapper 
  FluentValidations For DTO 
- Swagger XML COmments 
+ Swagger XML Comments
+ Exception Global
  
 顺序：
 Repository(dbContext)  →  Service(Repository) → （DI）program.cs ->  Controller(Service)
@@ -85,8 +91,8 @@ Step1:
 Repository(dbContext) 
 Service(Repository)
 Controller(Service)
- 
 
- 
+Service 的标准写法
+在搭建repo和Service 层之间的connection时，ServiceResponse<T> 来
  
  

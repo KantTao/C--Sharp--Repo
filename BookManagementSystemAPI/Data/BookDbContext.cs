@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 namespace BookManagementSystemAPI.Data
 {
     
-    
     public class BookDbContext:DbContext //BookDb database
     {
         public DbSet<Book> BookTable { get; set; }
@@ -14,7 +13,7 @@ namespace BookManagementSystemAPI.Data
         {
             
         }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //define relation, define constraints

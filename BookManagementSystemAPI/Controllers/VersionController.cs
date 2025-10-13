@@ -22,7 +22,6 @@ namespace BookManagementSystemAPI.Controllers
         }
         
         
-        
         /// <summary>
         ///  Return AppInfo From configuration
         /// </summary>
@@ -47,7 +46,6 @@ namespace BookManagementSystemAPI.Controllers
                 
                 return Ok(_appInfo);
             }
-         
         
 
     }

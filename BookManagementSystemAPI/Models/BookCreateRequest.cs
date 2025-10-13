@@ -1,5 +1,6 @@
 ﻿namespace BookManagementSystemAPI.Models
 {
+    
     public class BookCreateRequest
     { 
         public string Name { get; set; }

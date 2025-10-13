@@ -101,6 +101,8 @@ namespace PaintSystemAPIVersionOne.Controllers
             return Ok(PaintProductsStocks);
         }
         
+        
+        
         [HttpGet("PaintProductsStock/{id}")]
         public IActionResult PaintProductsStockById(int id)
         {
@@ -114,7 +116,6 @@ namespace PaintSystemAPIVersionOne.Controllers
             
             return Ok(PaintProductsStock);
         }
-        
         
         [HttpPost("paintProductStock")]
         public IActionResult CreatePaintProductStock([FromBody] PaintProductsStock paintProductsStock)

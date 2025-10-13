@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<List<User>>> GetAllUsers()
     {   
         var response = await _userService.GetAllUsers();
-
+        
         if (!response.IsSuccess) return BadRequest(response.Message);
 
         return response.Data;

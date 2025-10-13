@@ -29,7 +29,6 @@ public class PaintProduct
     public PaintSeries? PaintSeries { get; set; }
     
     
-    
     [ForeignKey("PaintCategories")] public int PaintCategoryId { get; set; }
     public PaintCategories? PaintCategories { get; set; }
 
