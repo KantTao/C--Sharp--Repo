@@ -52,7 +52,6 @@ namespace BookManagementSystemAPI.Controllers
         //DTO 
         public IActionResult CreateBook([FromBody] BookCreateRequest book)
         {
-            
             Book newBook = _bookService.CreateBook(book);
            // return Ok(newBook);
             return StatusCode(201, newBook);

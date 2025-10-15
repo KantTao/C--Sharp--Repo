@@ -119,8 +119,6 @@ public class PaintDbContext : DbContext
         
         //PaintProductsStock -----> StockTransaction (Many-----> Many)
         
-        
-        
         modelBuilder.Entity<StockTransactionDetail>()
             .HasKey(st => new { st.PaintProductsStockId, st.StockTransactionId }); // 复合主键
         
@@ -130,8 +128,6 @@ public class PaintDbContext : DbContext
             .WithMany(ps=>ps.StockTransactionDetails)//PaintProductsStock可关联多个StockTransactionDetail
             .HasForeignKey(st=>st.PaintProductsStockId)//中间表有PaintProductsStock的外建
             .OnDelete(DeleteBehavior.NoAction);
-        
-        
         
         //StockTransactionDetail---> StockTransaction
         modelBuilder.Entity<StockTransactionDetail>()

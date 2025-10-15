@@ -12,7 +12,7 @@ public class Order
     [Required]
     [Column(TypeName = "decimal(18,2)")]
     public decimal TotalPrice { get; set; }
-
+    
     [Required] public OrderStatus OrderStatus { get; set; }
     [Required] [MaxLength(50)] public string OrderReference { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -26,12 +26,9 @@ public class Order
     public User? User { get; set; }
     public Payment? Payment { get; set; }
     
-    
-    
     public Order()
     {
     }
-    
     
     public Order(decimal totalPrice, OrderStatus orderStatus, string orderReference)
     {

@@ -1,3 +1,5 @@
+using PaintSystemAPIVersionOne.Model;
+
 namespace PaintSystemAPIVersionOne.Services;
 
 
@@ -8,6 +10,8 @@ public static class ServiceModule
         
         services.AddScoped<UserService>();
         services.AddScoped<PaintProductService>();
+        services.AddScoped<OrderService>();
+        services.AddScoped<PaintProductStockService>();
         
     }
 }

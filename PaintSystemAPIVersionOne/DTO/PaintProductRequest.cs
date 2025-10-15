@@ -1,13 +1,21 @@
 using System.ComponentModel.DataAnnotations;
-using PaintSystemAPIVersionOne.Enum;
-
 namespace PaintSystemAPIVersionOne.DTO;
 
 public class PaintProductRequest
 {   
-    public decimal TotalPrice { get; set; }
-    public OrderStatus OrderStatus { get; set; }
-    [Required] [MaxLength(50)] public string OrderReference { get; set; }
-    [Required] public int UserId { get; set; }
     
+    [MaxLength(50)] 
+    public string? name { get; set; }
+    [Required]
+    public decimal PricePerLitre { get; set; }
+    public string color { get; set; }
+    public string glossLevel { get; set; }
+    public string baseType { get; set; }
+    public string size { get; set; }
+    public int  stock { get; set; }
+    public int  paintBrandId { get; set; }
+    public int  paintSeriesId { get; set; }
+    public int  paintCategoryId { get; set; }
+    
+
 }

@@ -16,17 +16,18 @@ public class UserRepository
     }
     
     
-   
     /// <summary>
     /// Get all users from Database using dbContext
     /// </summary>
     /// <returns> List of users </returns>
+    /// 
     public async  Task<List<User>>  GetAllUsers()
     {
         return await _dbContext.UserTable.ToListAsync();
     }
     
-    //
+    
+    
     
     
 }

@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
+using PaintSystemAPIVersionOne.Exceptions;
 using PaintSystemAPIVersionOne.Model;
 using PaintSystemAPIVersionOne.Services;
+
 
 namespace PaintSystemAPIVersionOne.Controllers;
 
@@ -17,7 +18,6 @@ public class UserController : ControllerBase
     }
     
     
-    
     /// <summary>
     /// Get all users to API 
     /// </summary>
@@ -29,9 +29,15 @@ public class UserController : ControllerBase
     {   
         var response = await _userService.GetAllUsers();
         
+        var formatted = new FormattedResponse<List<User>>(
+            response.Message,
+            response.IsSuccess,
+            response.IsSuccess ? 200 : 400,
+            response.Data
+        );
+        
         if (!response.IsSuccess) return BadRequest(response.Message);
 
-        return response.Data;
-
+        return StatusCode(formatted.StatusCode, formatted);
     }
 }

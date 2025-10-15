@@ -40,7 +40,6 @@ public class PaintProduct
     public List<StockTransaction> StockTransactions { get; set; } = new();
  
     
-    
     public PaintProduct()
     {
     }

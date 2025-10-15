@@ -23,8 +23,9 @@ public class PaintProductRepository
     {
         return await _dbContext.PaintProductTable.ToListAsync();
     }
-
-
+    
+    
+    
     /// <summary>
     /// return a specific PaintProduct by id
     /// </summary>
@@ -36,8 +37,6 @@ public class PaintProductRepository
         var paint = await _dbContext.PaintProductTable.FirstOrDefaultAsync(p => p.Id == Id);
         return paint;
     }
-    
-    
     
     /// <summary>
     /// Add new paintProduct to database 

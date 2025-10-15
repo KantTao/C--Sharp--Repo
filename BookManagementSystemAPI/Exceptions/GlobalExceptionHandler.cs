@@ -9,7 +9,6 @@ namespace BookManagementSystemAPI.Exceptions;
 public class GlobalExceptionHandler
 {
     private ILogger<GlobalExceptionHandler> _logger;
-
     
     public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
     {
@@ -17,7 +16,6 @@ public class GlobalExceptionHandler
     }
     
     
-
 
     public async Task HandleExceptionAsync(HttpContext context)
     {

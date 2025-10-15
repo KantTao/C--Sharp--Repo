@@ -8,7 +8,6 @@ namespace PaintSystemAPIVersionOne.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-    
     //可以从Controllers 可以调用_dbContext的数据从数据库，从而返回前段接口？
     public class PaintController : ControllerBase
     {
@@ -68,7 +67,6 @@ namespace PaintSystemAPIVersionOne.Controllers
             {
                 return BadRequest("PaintProduct is null");
             }
-
             
             var newPaintProduct = new PaintProduct(
                 paintProduct.Name,
@@ -79,7 +77,7 @@ namespace PaintSystemAPIVersionOne.Controllers
                 paintProduct.Size,
                 paintProduct.Stock
             )
-
+            
             {
                 // 通过对象初始化器设置其他字段
                 PaintBrandId = paintProduct.PaintBrandId,
@@ -151,7 +149,6 @@ namespace PaintSystemAPIVersionOne.Controllers
         }
         
         
-        
         [HttpPost("order")]
         public IActionResult CreateOrder([FromBody] Order order)
         {
@@ -181,18 +178,18 @@ namespace PaintSystemAPIVersionOne.Controllers
         }
         
         
-        
         [HttpDelete("order/{id}")]
         public IActionResult CancelOrder(int id)
         {
             var order = _dbContext.OrderTable.Find(id);
             if (order == null)
                 return NotFound();
-
+            
             _dbContext.OrderTable.Remove(order);
             _dbContext.SaveChanges();   // ✅ 返回200 + 消息
             return Ok(new { message = "Delete successful", deletedOrderId = id });
         }
+        
         
     }
 

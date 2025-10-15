@@ -2,10 +2,10 @@ namespace PaintSystemAPIVersionOne.Extension;
 
 public class ServiceResponse<T>
 {
-    public bool IsSuccess { get; set; }      // 业务是否成功
-    public string Message { get; set; }      // 提示信息
-    public T Data { get; set; }              // 返回数据
-    
+    public bool IsSuccess { get; set; }
+    public string Message { get; set; }
+    public T? Data { get; set; }   // ✅ 改成可空
+
     public ServiceResponse()
     {
     }
