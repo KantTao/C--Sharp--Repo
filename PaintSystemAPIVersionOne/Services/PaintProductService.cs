@@ -25,31 +25,31 @@ public class PaintProductService
     ///Return all products 
     /// </summary>
     /// <returns> List of PaintProduct </returns>
-    public async Task<ServiceResponse<List<PaintProduct>>> GetAllPaintProduct()
+    public async Task<List<PaintProduct>>  GetAllPaintProduct()
     {
         var products = await _paintProductRepository.GetAllPaintProducts();
 
         if (products == null || products.Count == 0)
-        {
-            // 数据为空，业务返回失败
-            return new ServiceResponse<List<PaintProduct>>(false, "No PaintProduct found", null);
-        }
-
+            // 抛异常，由中间件统一处理
+            throw new KeyNotFoundException("No PaintProduct found");
         // 数据存在，业务返回成功
-        return new ServiceResponse<List<PaintProduct>>(true, "PaintProduct retrieved successfully", products);
+        return products; // 成功返回实体列表
+        
     }
     
-    public async Task<ServiceResponse<PaintProduct>> GetProductById(int id)
+    
+    
+    public async Task<PaintProduct> GetProductById(int id)
     {
         var product = await _paintProductRepository.GetPaintProductById(id);
 
         if (product == null)
-        {
-            return new ServiceResponse<PaintProduct>(false, "PaintProduct No Found", null);
-        }
-
-        return new ServiceResponse<PaintProduct>(true, "PaintProduct Found", product);
+            // 找不到数据，抛异常，由中间件统一返回 404 + FormattedResponse
+            throw new KeyNotFoundException("PaintProduct not found");
+        return product; // 正常返回实体
     }
+    
+    
     
     
     
@@ -57,50 +57,21 @@ public class PaintProductService
     ///  Get a PaintProductRequest(DTO) and initial a new paintProduct casting to repo layer
     /// </summary>
     /// <param name="paintProductRequest"></param>
-    /// <returns> PaintProduct of ServiceResponse to controller</returns>
-    public async Task<ServiceResponse<PaintProduct>> AddProduct(PaintProductRequest paintProductRequest)
+    /// <returns> PaintProduct to controller</returns>
+    public async Task<PaintProduct> AddProduct(PaintProductRequest paintProductRequest)
     {
-        var ids = new[]
-        {
-            paintProductRequest.paintBrandId,
-            paintProductRequest.paintCategoryId,
-            paintProductRequest.paintSeriesId
-        };
         
-        //DTO transfer to PaintProduct Object 
-        
-        
-        // 如果有任意一个 <= 0，则返回错误   有了fluentValidation后 可以直接取消 
-        // if (ids.Any(id => id <= 0))
-        // {
-        //     return new ServiceResponse<PaintProduct>
-        //     {
-        //         IsSuccess = false,
-        //         Message = "Incorrect ID Input "
-        //     };
-        // }
-        
-        
-        // var paintProduct = new PaintProduct
-        // {
-        //     Name = paintProductRequest.name,
-        //     PricePerLitre = paintProductRequest.PricePerLitre,
-        //     Color = paintProductRequest.color,
-        //     GlossLevel = paintProductRequest.glossLevel,
-        //     BaseType = paintProductRequest.baseType,
-        //     Size = paintProductRequest.size,
-        //     Stock = paintProductRequest.stock,
-        //     PaintBrandId = paintProductRequest.paintBrandId,
-        //     PaintSeriesId = paintProductRequest.paintSeriesId,
-        //     PaintCategoryId = paintProductRequest.paintCategoryId
-        // };
-        //            var order = _mapper.Map<Order>(request);
-        
-        // DTO Transfer to Object  with AutoMapper
-        var paintProduct = _mapper.Map<PaintProduct>(paintProductRequest);
-        
-        await _paintProductRepository.AddProduct(paintProduct);
-        return  new ServiceResponse<PaintProduct>(true, "Created successfully", paintProduct);
+            // DTO → Entity（AutoMapper）
+            var paintProduct = _mapper.Map<PaintProduct>(paintProductRequest);
+
+            // 调用 Repository 层添加
+            await _paintProductRepository.AddProduct(paintProduct);
+            
+            // 抛异常，由中间件统一处理，返回 500 + FormattedResponse
+            throw new InvalidOperationException("Add PaintProduct failed");
+            
+            return paintProduct;
+            
     }
     
 }

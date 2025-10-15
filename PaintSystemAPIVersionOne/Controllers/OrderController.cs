@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaintSystemAPIVersionOne.DTO;
 using PaintSystemAPIVersionOne.Enum;
+using PaintSystemAPIVersionOne.Exceptions;
 using PaintSystemAPIVersionOne.Extension;
 using PaintSystemAPIVersionOne.Model;
 using PaintSystemAPIVersionOne.Services;
@@ -45,18 +46,8 @@ namespace PaintSystemAPIVersionOne.Controllers
         /// Returns a 200 OK response with the order data if found; 
         /// otherwise, returns a 400 Bad Request with an error message.
         /// </returns>
-        [HttpGet("get-order-by-id/{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetOrderById(int id)
-        {
-            var response = await _orderService.GetOrderById(id);
+        
 
-            if (!response.IsSuccess)
-                return BadRequest(response.Message);
-
-            return Ok(response.Data);
-        }
         
         
         
@@ -70,13 +61,13 @@ namespace PaintSystemAPIVersionOne.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddOrder([FromBody] OrderCreateRequest request)
         {
-            // 调用 Service 层
-            var response = await _orderService.AddOrder(request);
             
-            if (!response.IsSuccess)
-                return BadRequest(response.Message); // 返回 400 和错误信息
-
-            return Ok(response.Data); // 返回 200 和新建的订单
+            // 调用 Service 层
+            var order = await _orderService.AddOrder(request);
+            // 成功统一返回 FormattedResponse
+            var response = FormattedResponse<Order>.Success(order, "Order added successfully");
+            return Ok(response);
+            
         }
         
         
@@ -94,14 +85,13 @@ namespace PaintSystemAPIVersionOne.Controllers
         public async Task<IActionResult> DeleteOrder(int id)
         {
             // 调用 Service 层删除订单
-            var response = await _orderService.DeleteOrderById(id);
+            var deletedOrder = await _orderService.DeleteOrderById(id);
 
-            // 如果失败，返回 400
-            if (!response.IsSuccess)
-                return BadRequest(response.Message);
-
+            // 成功统一返回 FormattedResponse
+            var response = FormattedResponse<Order>.Success(deletedOrder, "Order deleted successfully");
+            
             // 成功返回 200 和被删除的订单
-            return Ok(response.Data);
+            return Ok(response);
         }
     }
     

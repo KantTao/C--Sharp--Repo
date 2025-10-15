@@ -8,10 +8,13 @@ namespace PaintSystemAPIVersionOne.Repositories;
 public class OrderRepository
 {
     private readonly PaintDbContext _dbContext;
-
-    public OrderRepository(PaintDbContext dbContext)
+    private readonly ILogger<OrderRepository> _logger;
+    
+    public OrderRepository(PaintDbContext dbContext,ILogger<OrderRepository> logger)
     {
         _dbContext = dbContext;
+        _logger = logger;
+        
     }
 
     /// <summary>
@@ -53,20 +56,23 @@ public class OrderRepository
     /// <exception cref="InvalidOperationException">Thrown if adding the order fails.</exception>
     public async Task<Order> AddOrder(Order order)
     {
-        await _dbContext.OrderTable.AddAsync(order);
-        await _dbContext.SaveChangesAsync();
-        return order;
-        
-        // try
-        // {
-        //   
-        // }
-        // catch (Exception ex)
-        // {
-        //     throw new InvalidOperationException("Add Order failed Repo-Layer", ex);
-        // }
-    }
+        try
+        {
+            await _dbContext.OrderTable.AddAsync(order);
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            // 记录日志
+            Console.WriteLine("==== Before logger ====");
+            _logger.LogError(e, "Failed to add order to DataBase Logger Logger");
+            Console.WriteLine("==== After logger ====");
+            // 抛出带自定义消息的异常，并保留原始异常
+            throw new InvalidOperationException("Add Order failed in Repo layer", e);
+        }
     
+        return order;
+    }
     
     /// <summary>
     /// Deletes an order from the database by its ID.

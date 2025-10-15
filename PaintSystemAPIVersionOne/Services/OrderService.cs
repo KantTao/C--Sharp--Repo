@@ -1,6 +1,7 @@
 using AutoMapper;
 using PaintSystemAPIVersionOne.DTO;
 using PaintSystemAPIVersionOne.Enum;
+using PaintSystemAPIVersionOne.Exceptions;
 using PaintSystemAPIVersionOne.Extension;
 using PaintSystemAPIVersionOne.Model;
 using PaintSystemAPIVersionOne.Repositories;
@@ -11,14 +12,14 @@ public class OrderService
 {
     private readonly OrderRepository _orderRepository;
     private readonly IMapper _mapper;
-    
-    public OrderService(OrderRepository orderRepository,IMapper mapper)
+
+    public OrderService(OrderRepository orderRepository, IMapper mapper)
     {
         _orderRepository = orderRepository;
         _mapper = mapper;
     }
-    
-    
+
+
     /// <summary>
     ///ger all orders from _userRepository
     /// </summary>
@@ -36,8 +37,8 @@ public class OrderService
         // 数据存在，业务返回成功
         return new ServiceResponse<List<Order>>(true, "Users retrieved successfully", orders);
     }
-    
-    
+
+
     /// <summary>
     /// Retrieves an order by its unique identifier.
     /// </summary>
@@ -46,22 +47,23 @@ public class OrderService
     /// A <see cref="ServiceResponse{Order}"/> containing the order data if found; 
     /// otherwise, a response indicating that no order was found.
     /// </returns>
-    public async Task<ServiceResponse<Order>> GetOrderById(int Id)
+
+    // FormattedResponse<T>
+    public async Task<Order> GetOrderById(int Id)
     {
         var order = await _orderRepository.GetOrderById(Id);
-
+        
         if (order == null)
-            return new ServiceResponse<Order>(false, "No order found", null);
-
-        return new ServiceResponse<Order>(true, "Order retrieved successfully", order);
+            //MidWare will catch this exception and formated result to customer-end 
+            throw new KeyNotFoundException("No order found"); // 抛异常，由中间件统一返回 404
+        
+        return order; // 正常返回实体
     }
-    
-    
-    
-    public async Task<ServiceResponse<Order>> AddOrder(OrderCreateRequest request)
+
+
+    public async Task<Order> AddOrder(OrderCreateRequest request)
     {
-        try
-        {
+        
             // var order = new Order
             // {
             //     UserId = request.Id,
@@ -69,41 +71,23 @@ public class OrderService
             //     OrderReference = request.OrderReference,
             //     OrderStatus = (OrderStatus)request.OrderStatus // 关键：int → enum
             // };
-            
+
             //DTO transfer to Object with Auto Mapper 
             var order = _mapper.Map<Order>(request);
-            
-            // 调用 Repository 层
+            // 调用 Repository 层新增订单 ：不需要 try/catch，错误直接抛出，中间件统一处理。
             var addedOrder = await _orderRepository.AddOrder(order);
+            return addedOrder;
 
-            return new ServiceResponse<Order>(true, "Order retrieved successfully", order);
-        }
-        catch (Exception ex)
-        {
-            return new ServiceResponse<Order>(false, "Order Add Fail", null);
-        }
     }
-    
-    
-    
-    public async Task<ServiceResponse<Order>> DeleteOrderById(int id)
+
+    public async Task<Order>  DeleteOrderById(int id)
     {
-        try
-        {
             // 调用 Repository 层删除
             var deletedOrder = await _orderRepository.DeleteById(id);
-
+            // 如果未找到订单，直接抛异常，由中间件统一返回 404
             if (deletedOrder == null)
-            {
-                return new ServiceResponse<Order>(false, "Order not found", null);
-            }
-
-            return new ServiceResponse<Order>(true, "Order deleted successfully", deletedOrder);
-        }
-        catch (Exception ex)
-        {
-            return new ServiceResponse<Order>(false, $"Failed to delete order: {ex.Message}", null);
-        }
+                throw new KeyNotFoundException("Order not found");
+            // 成功返回被删除的订单
+            return deletedOrder;
     }
-
 }

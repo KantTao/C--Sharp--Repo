@@ -17,6 +17,7 @@ public class FormattedResponse<T>
         Data = data;
         RequestTime = DateTime.Now;
     }
+    
 
     public static FormattedResponse<T> Success(T data, string message = "Success")
     {

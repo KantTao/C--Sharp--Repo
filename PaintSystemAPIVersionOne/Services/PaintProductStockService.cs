@@ -23,27 +23,17 @@ public class PaintProductStockService
     /// A <see cref="ServiceResponse{T}"/> containing a list of <see cref="PaintProductsStock"/> 
     /// and status information.
     /// </returns>
-    public async Task<ServiceResponse<List<PaintProductsStock>>> GetAllPaintProductsStock()
+    public async Task<List<PaintProductsStock>>  GetAllPaintProductsStock()
     {
         //var response = new ServiceResponse<List<PaintProductsStock>>();
-
-        try
-        {
-            var stocks = await _paintStockRepository.GetAllPaintProductsStock();
-
-            if (stocks.Count == 0)
-            {
-                return new ServiceResponse<List<PaintProductsStock>>(false, "No Stocks no found", null);
-            }
-
-            return new ServiceResponse<List<PaintProductsStock>>(true, "Stocks retrieved successfully", stocks);
-        }
-        catch (Exception ex)
-        {
-            return new ServiceResponse<List<PaintProductsStock>>(false,
-                $"Failed to retrieve paint products: {ex.Message}", null);
-        }
+        var stocks = await _paintStockRepository.GetAllPaintProductsStock();
+        if (stocks == null || stocks.Count == 0)
+            // 数据为空，抛异常由 Middleware 捕获并返回统一格式
+            throw new KeyNotFoundException("No Stocks found");
+        return stocks; // 成功返回实体列表
     }
+    
+    
 
     /// <summary>
     /// 异步根据库存 ID 获取对应的 PaintProductsStock 信息。
@@ -54,16 +44,17 @@ public class PaintProductStockService
     /// - 如果找到对应库存，<c>IsSuccess</c> 为 <c>true</c>，<c>Data</c> 包含库存信息；  
     /// - 如果未找到，<c>IsSuccess</c> 为 <c>false</c>，<c>Data</c> 为 <c>null</c>，并携带错误消息。
     /// </returns>
-    public async Task<ServiceResponse<PaintProductsStock>> GetPaintProductsStockById(int id)
+    
+    
+    public async Task<PaintProductsStock> GetPaintProductsStockById(int id)
     {
-        PaintProductsStock? newStock = await _paintStockRepository.GetPaintProductsStockById(id);
+        var stock = await _paintStockRepository.GetPaintProductsStockById(id);
 
-        if (newStock is null)
-        {
-            return new ServiceResponse<PaintProductsStock>(false, $"No stock found with ID {id}.", null);
-        }
+        if (stock == null)
+            // 找不到数据，抛异常，由 Middleware 捕获并返回统一格式
+            throw new KeyNotFoundException($"No stock found with ID {id}.");
 
-        return new ServiceResponse<PaintProductsStock>(true, "Stock retrieved successfully.", newStock);
+        return stock; // 成功返回实体
     }
     
     
@@ -73,29 +64,21 @@ public class PaintProductStockService
     /// </summary>
     /// <param name="StockRequest">包含 PaintProductId 和 StockQuantity 的请求对象。</param>
     /// <returns>返回包含新增库存信息的 ServiceResponse 对象。</returns>
-    public async Task<ServiceResponse<PaintProductsStock>> AddPaintProductsStock(PaintProductStockRequest StockRequest)
+    /// <summary>
+    /// 异步添加新的库存记录。
+    /// </summary>
+    /// <param name="stockRequest">包含 PaintProductId 和 StockQuantity 的请求对象。</param>
+    /// <returns>返回新增库存实体。</returns>
+    public async Task<PaintProductsStock> AddPaintProductsStock(PaintProductStockRequest stockRequest)
     {
+        // DTO → Entity
+        var newStock = _mapper.Map<PaintProductsStock>(stockRequest);
+        newStock.CreatedAt = DateTime.Now; // 设置创建时间
 
-        
-       // var paintProduct = _mapper.Map<PaintProduct>(paintProductRequest);
-        // var newStock = new PaintProductsStock
-        // {
-        //     StockQuantity = StockRequest.stockQuantity,
-        //     PaintProductId = StockRequest.paintProductId,
-        //     CreatedAt = DateTime.Now // 自动设置创建时间
-        // };
-        
-        var newStock= _mapper.Map<PaintProductsStock>(StockRequest);
-        
-        try
-        {
-            await _paintStockRepository.AddPaintProductsStock(newStock);
-            return new ServiceResponse<PaintProductsStock>(true, "Stock added successfully", newStock);
-        }
-        catch (Exception e)
-        {
-            // 出现异常返回失败响应
-            return new ServiceResponse<PaintProductsStock>(false, $"Failed to add stock Service: {e.Message}", null);
-        }
+        // 调用 Repository 添加
+        await _paintStockRepository.AddPaintProductsStock(newStock);
+
+        // 成功返回实体
+        return newStock;
     }
 }

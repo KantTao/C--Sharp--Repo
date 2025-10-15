@@ -46,7 +46,6 @@ public class PaintProductRepository
     /// <exception cref="InvalidOperationException"></exception>
     public async Task<PaintProduct> AddProduct(PaintProduct paintProduct)
     {
-        
         try
         {
             await _dbContext.PaintProductTable.AddAsync(paintProduct);
@@ -55,8 +54,7 @@ public class PaintProductRepository
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException("Add product failed", ex);
+            throw new InvalidOperationException("Add product failed Repo-Layer", ex);
         }
-        
     }
 }

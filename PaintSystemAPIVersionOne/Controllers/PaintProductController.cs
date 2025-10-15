@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaintSystemAPIVersionOne.DTO;
+using PaintSystemAPIVersionOne.Exceptions;
 using PaintSystemAPIVersionOne.Model;
 using PaintSystemAPIVersionOne.Services;
 
@@ -25,30 +26,35 @@ namespace PaintSystemAPIVersionOne.Controllers
         /// <returns>List of users (Swagger should show the default Datatype) </returns>
         [HttpGet("get-products")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<List<PaintProduct>>> GetAllPaintProduct()
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllPaintProduct()
         {
-            var response = await _paintProductService.GetAllPaintProduct();
-            
-            if (!response.IsSuccess) return BadRequest(response.Message);
-            return Ok(response.Data);
+            var products = await _paintProductService.GetAllPaintProduct();
+            // 成功返回统一格式
+            var response = FormattedResponse<List<PaintProduct>>.Success(products, "PaintProduct retrieved successfully");
+            return Ok(response);
         }
+        
         
         /// <summary>
         /// get Product by id 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("get-Product-by-Id")]
+        [HttpGet("get-product-by-id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPaintProductById(int id)
         {
-            var response = await _paintProductService.GetProductById(id);
-            if (!response.IsSuccess) return BadRequest(response.Message);
-            return Ok(response.Data);
+            var product = await _paintProductService.GetProductById(id);
+            // 成功返回统一格式
+            var response = FormattedResponse<PaintProduct>.Success(product, "PaintProduct found successfully");
+            return Ok(response);
         }
 
+        
         
         
         /// <summary>
@@ -56,18 +62,18 @@ namespace PaintSystemAPIVersionOne.Controllers
         /// </summary>
         /// <param name="paintProductRequest"></param>
         /// <returns></returns>
-        [HttpPost("add-Product")]
+        [HttpPost("add-product")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddProduct([FromBody]PaintProductRequest paintProductRequest)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> AddProduct([FromBody] PaintProductRequest paintProductRequest)
         {
-            
-            // 调用服务层方法
-            var result = await _paintProductService.AddProduct(paintProductRequest);
+            // 调用 Service 层
+            var paintProduct = await _paintProductService.AddProduct(paintProductRequest);
 
-            if (!result.IsSuccess)
-                return BadRequest(result.Message); // 校验失败或ID错误
-            return Ok(result.Data); // 创建成功，返回新对象
+            // 成功返回统一格式
+            var response = FormattedResponse<PaintProduct>.Success(paintProduct, "PaintProduct created successfully");
+            return Ok(response);
         }
     }
     
