@@ -27,4 +27,6 @@ public class User
         DuluxAccountInfo = duluxAccountInfo;
         CreatedAt = DateTime.Now; // 或者 DateTime.UtcNow 更常用
     }
+    
+    
 }

@@ -15,7 +15,6 @@ public class PaintProductsStock
     public ICollection<StockTransactionDetail>? StockTransactionDetails { get; set; }
     
     
-    
     public PaintProductsStock()
     {
     }

@@ -25,7 +25,7 @@ namespace PaintSystemAPIVersionOne.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("PaintSystemAPIVersionOne.Model.Order", b =>
+            modelBuilder.Entity("PaintSystemAPIVersionowTn.Model.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

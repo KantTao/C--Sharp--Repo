@@ -29,7 +29,6 @@ public class PaintProduct
     public PaintSeries? PaintSeries { get; set; }
     
     
-    
     [ForeignKey("PaintCategories")] public int PaintCategoryId { get; set; }
     public PaintCategories? PaintCategories { get; set; }
 
@@ -40,7 +39,6 @@ public class PaintProduct
     public List<OrderPaintProductDetail> OrderPaintProducts { get; set; } = new();
     public List<StockTransaction> StockTransactions { get; set; } = new();
  
-    
     
     public PaintProduct()
     {
