@@ -1,6 +1,0 @@
-@PaintSystemAPIVersionOne_HostAddress = http://localhost:5067
-
-GET {{PaintSystemAPIVersionOne_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
