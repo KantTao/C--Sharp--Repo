@@ -1,13 +1,14 @@
 using BookManagementSystemAPI.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace BookManagementSystemAPI.Controllers
 {
     
-    
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VersionController : ControllerBase
     {
         //private IConfiguration _configuration;
