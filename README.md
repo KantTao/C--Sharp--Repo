@@ -1,0 +1,154 @@
+normal class ----(Data Annotation)-----> Entity Model 
+
+Step 1 : Class Model 
+
+Create a Data Directory and build class 
+
+step2 : Entity Model  
+  1 在appsettings.json 文件中配置添加 connectionStrings{} (服务端连接后端数据库的前提条件)
+  2 创建文件夹Data 并定义一个PaintDbContext.cs       (数据库上下文类，处理数据库操作的核心)
+  3 创建文件夹Controller， 定义一个PaintController,  （前段的第一个门坎）
+  4 建立Controller和PaintDbContext的联系 （这样才能在Controller中使用DbContext调用数据库数据）
+    在PaintController中定义PaintDbContext 并进行注入
+  5 对象关系映射（ORM) 方法1: Data Annotation重写普通类到实体类 方法2:Fluent API 
+    Data Annotation: 没构建一个新的FK，就要修改构造参数把新FK添加进去
+------------------------ The relationship of Table ----------------------
+    //数据库初始化 
+    User    ------> Order        (1-----> Many)  
+    Order ------> User (Many-----> 1)
+PaintBrand ------> PaintSeries  (1-----> Many)
+PaintBrand ------> PaintProduct      (1-----> Many)
+PaintSeries------> PaintBrand   (Many--> 1)
+PaintSeries------> PaintProduct      (1-----> Many)
+PaintCategories--> PaintProduct      (1----->Many)
+PaintProduct------> PaintSeries (Many-----> 1)
+PaintProduct------> PaintCategories (Many-----> 1)
+PaintProduct------> Order   (Many-----> Many)
+******
+
+PaintProductsStock -----> PaintProduct (1----->1)
+Order ------> Payments (1 ---- > 1)
+PaintProduct  ---->  StockTransactions (1 ----> Many)
+
+PaintProductsStock -----> StockTransaction (Many-----> Many)
+
+===================================================
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+ 
+？ 1 to 1 Dbeaver 会和Diagram图为何会出现 小圆点? 
+
+
+
+ Tip:
+ Define a many to many on 2 tables,
+ 1 定义一个中间表 把中间表作为导航属性 分别加在各自两个表中 集合使用 public ICollection<class>
+ 2 创建API Fluent的时候 防止多重联机  .OnDelete(DeleteBehavior.NoAction); 
+ 
+step3 : Seeder Loading  Data  
+
+
+ Program.cs:
+ DbInitializer.Initialize(app.Services);
+ 
+ User
+ PaintBrand
+ PaintCategories
+ PaintSeries 
+ PaintProduct 
+ Order   
+ OrderDetails / Order ↔ PaintProduct 中间表 
+ PaintProductsStock
+ StockTransactions  ***
+ Payments
+
+ ------ Seeder--------
+ 
+ 前段传进来的参数，不写ID 数据库自增ID
+ 前段传递的参数，只传FK 而不写FK对呀的相关属性，需要在Class里面的导航属性中加？ 
+ 不然就要附带FK的Field。
+ 
+==============================Version 2 =============================
+
+ Controller layers build 
+ services   layer  build 
+ repository layer  build 
+ relevant Dependency Injection
+ DTO  Transfer Object
+ Swagger XML Comments
+ DTO Build with Automapper 
+ 
+ FluentValidations For DTO 
+ Exception Global
+ Logger 
+
+
+
+顺序：
+
+Repository(dbContext)  →  Service(Repository) → （DI）program.cs ->  Controller(Service)
+
+原因： Controller 依赖 Service，Service 依赖 Repository，Repository 依赖 DbContext
+
+Step1: 
+Repository(dbContext) 
+Service(Repository)
+Controller(Service)
+
+Service 的标准写法
+在搭建repo和Service 层之间的connection时，ServiceResponse<T> 来
+
+____order_____
+get all orders
+get order by id 
+post order 
+delete order by id 
+------paintStock------
+getAllPaintStock
+paintStockById
+createPaintStock
+
+
+
+
+| Layer          | Main responsibility                            |
+| ---------- | ------------------------------- |
+| Controller | 接收前端请求，返回响应，调用 Service 层        |
+| Service    | 处理业务逻辑，验证数据，进行 DTO ↔ Entity 的转换 |
+| Repository | 直接操作数据库，CRUD，不处理 DTO            |
+| Entity     | 数据库表对应的实体模型                     |
+| DTO        | 前端请求/响应的数据传输对象                  |
+
+
+| 层级               | 目的     | 是否应执行验证 | 备注                  |
+| ---------------- | ------ | ------- | ------------------- |
+| **API 层**        | 拦截非法输入 | ✅ 是     | 使用 FluentValidation |
+| **Service 层**    | 验证业务逻辑 | ✅ 可选    | 数据库相关验证             |
+| **Repository 层** | 数据存取   | ❌ 否     | 假设数据已合法             |
+
+ =======FluentValidations For DTO ======
+ Normally used in post Put/Patch 
+ ✅ 总结：
+ 
+ 1安装 FluentValidation。
+ 2创建 DTO 验证器。
+ 3注册验证器。
+ 4API 层自动拦截非法输入。
+ 5可选：自定义错误返回格式。
+ 
+ 
+ 前端请求 → Middleware（全局异常捕获）
+              ↓
+            Controller（接收 DTO）
+              ↓
+         FluentValidation（校验 DTO）
+              ↓
+            Service（业务逻辑）
+              ↓
+          Repository（数据库操作）
+              ↓
+          数据库返回
+              ↑
+ 异常沿调用链冒泡
+ 
+ 
