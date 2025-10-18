@@ -1,5 +1,5 @@
 
-#C Project with PaintProduct 
+# C#Project with PaintProduct 
 
 1. Applied the Data Annotation and Fluent API to Create Daba on SQL Service 
 2. Applied the  Layered Architecture for Back-end 
