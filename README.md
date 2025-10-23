@@ -18,3 +18,5 @@
 7. Applied Logger 
 
 Project built on local host, using Docker Connect SQL Servers, PostMan, Dbeaver.
+
+8 . Applied MongoDb DataBase 
