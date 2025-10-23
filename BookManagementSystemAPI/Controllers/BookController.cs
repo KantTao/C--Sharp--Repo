@@ -1,5 +1,6 @@
 ﻿using BookManagementSystemAPI.Data;
 using BookManagementSystemAPI.Models;
+using BookManagementSystemAPI.MongoCollection;
 using BookManagementSystemAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,13 @@ namespace BookManagementSystemAPI.Controllers
         
         private BookDbContext _dbContext;
         private readonly IBookService _bookService;
+        private readonly MongoDbContext _mongoDbContext;
         
-        public BookController(IBookService _bookService)
+        
+        public BookController(IBookService _bookService,MongoDbContext mongoDbContext)
         {
             this._bookService = _bookService;
+            _mongoDbContext = mongoDbContext;
         }
 
         // [HttpGet]
@@ -52,8 +56,16 @@ namespace BookManagementSystemAPI.Controllers
         //DTO 
         public IActionResult CreateBook([FromBody] BookCreateRequest book)
         {
-            Book newBook = _bookService.CreateBook(book);
-           // return Ok(newBook);
+            Book newBook = _bookService.CreateBook(book); //SQL server的数据床架
+            var bookEvent = new BookEvent
+            {
+                BookId = newBook.Id,
+                AuthorId = newBook.AuthorId, 
+                EventNote = $"Book '{newBook.Name}' created successfully at {DateTime.UtcNow}"
+                
+            };
+            
+            _mongoDbContext.BookEvents.InsertOne(bookEvent); //依赖注入
             return StatusCode(201, newBook);
 
         }
