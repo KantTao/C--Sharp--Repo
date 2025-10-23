@@ -1,0 +1,15 @@
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/bin/Debug/net8.0/SynchronousAndAsynchronous
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/bin/Debug/net8.0/SynchronousAndAsynchronous.deps.json
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/bin/Debug/net8.0/SynchronousAndAsynchronous.runtimeconfig.json
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/bin/Debug/net8.0/SynchronousAndAsynchronous.dll
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/bin/Debug/net8.0/SynchronousAndAsynchronous.pdb
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.GeneratedMSBuildEditorConfig.editorconfig
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.AssemblyInfoInputs.cache
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.AssemblyInfo.cs
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.csproj.CoreCompileInputs.cache
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.sourcelink.json
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.dll
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/refint/SynchronousAndAsynchronous.dll
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.pdb
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/SynchronousAndAsynchronous.genruntimeconfig.cache
+/Users/yiweitao/Desktop/C-Sharp-Syntax/CSharpProject/SynchronousAndAsynchronous/obj/Debug/net8.0/ref/SynchronousAndAsynchronous.dll

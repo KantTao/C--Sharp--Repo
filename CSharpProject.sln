@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaintSystemAPIVersionOne", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagementSystemAPI", "BookManagementSystemAPI\BookManagementSystemAPI.csproj", "{DA8012F6-B63B-400A-8630-D27FE30A35B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronousAndAsynchronous", "SynchronousAndAsynchronous\SynchronousAndAsynchronous.csproj", "{53CD6521-1E21-4011-A1B0-20E72491D257}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA8012F6-B63B-400A-8630-D27FE30A35B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53CD6521-1E21-4011-A1B0-20E72491D257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53CD6521-1E21-4011-A1B0-20E72491D257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53CD6521-1E21-4011-A1B0-20E72491D257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53CD6521-1E21-4011-A1B0-20E72491D257}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

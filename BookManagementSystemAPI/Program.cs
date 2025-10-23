@@ -48,10 +48,16 @@ namespace BookManagementSystemAPI
                 options.UseSqlServer(builder.Configuration.GetConnectionString("BookDb"))
             );
 
-
+           
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IBookRepository, BookRepository>();
+            
+            
+            //MongoDb的配置 
+            builder.Services.AddSingleton<MongoDbContext>();
+            builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 
+            
             // --- AutoMapper 注入 ---
             //依赖注入AddAutoMapper
             builder.Services.AddAutoMapper(typeof(Program));
